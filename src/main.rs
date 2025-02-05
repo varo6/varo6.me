@@ -9,12 +9,18 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 #[derive(askama::Template)]
 #[template(path = "index.html")]
 pub struct IndexTemplate {
-    pub text: String,
+    pub title: String,
+    pub desc: String,
+    pub add_info: String,
 }
 
 async fn index() -> Result<Html<String>, axum::http::StatusCode> {
     let template = IndexTemplate {
-        text: "Hello, world!".to_string(),
+        title: "Hola👋, soy varo".to_string(),
+        desc: "Web hecha con Rust y Htmx".to_string(),
+        add_info:
+            "Web provisional hecha con Rust usando plantillas de askama y htmx. En construcción 🚧 "
+                .to_string(),
     };
     template
         .render()
