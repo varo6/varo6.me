@@ -6,6 +6,9 @@ edition = "2021"
 [dependencies]
 askama = "0.12.1"
 axum = { version = "0.8.1", features = ["ws"] }
+bytes = "1.10.0"
+http-body = "1.0.1"
+http-body-util = "0.1.2"
 serde = "1.0.217"
 sqlx = { version = "0.8.3", features = [ "runtime-tokio", "sqlite" ] }
 tokio = { version = "1.43.0", features = ["rt-multi-thread"] }

@@ -1,8 +1,9 @@
 use axum::extract::Extension;
+use axum::http::StatusCode;
 use axum::response::Json;
 use serde::{Deserialize, Serialize};
 use sqlx::sqlite::{SqliteConnectOptions, SqlitePool, SqlitePoolOptions};
-use sqlx::{ConnectOptions, FromRow};
+use sqlx::{ConnectOptions, Executor, FromRow};
 use std::str::FromStr;
 use std::sync::Arc;
 
@@ -25,7 +26,7 @@ impl Db {
 
         sqlx::query(
             "CREATE TABLE IF NOT EXISTS conns (
-                ip TEXT NOT NULL,
+                ip TEXT NOT NULL PRIMARY KEY,
                 count INTEGER NOT NULL
             );",
         )
@@ -33,6 +34,29 @@ impl Db {
         .await?;
 
         Ok(Self { pool })
+    }
+
+    // Update or insert IP address
+    pub async fn update_or_insert_ip(&self, ip: &str) -> Result<(), sqlx::Error> {
+        let mut tx = self.pool.begin().await?;
+
+        // Attempt to update the count if the IP exists
+        let update_result = sqlx::query("UPDATE conns SET count = count + 1 WHERE ip = ?")
+            .bind(ip)
+            .execute(&mut *tx)
+            .await?;
+
+        // If no rows were updated, then the IP doesn't exist, so insert it
+        if update_result.rows_affected() == 0 {
+            sqlx::query("INSERT INTO conns (ip, count) VALUES (?, 1)")
+                .bind(ip)
+                .execute(&mut *tx)
+                .await?;
+        }
+
+        tx.commit().await?;
+
+        Ok(())
     }
 }
 
