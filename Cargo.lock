@@ -2047,9 +2047,11 @@ version = "0.1.0"
 dependencies = [
  "askama",
  "axum",
+ "serde",
  "sqlx",
  "tokio",
  "tower-http",
+ "tracing",
  "tracing-subscriber",
 ]
 

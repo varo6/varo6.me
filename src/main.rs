@@ -1,10 +1,11 @@
 use askama::Template;
+use axum::extract::Extension;
 use axum::response::Html;
 use axum::{routing::get, Router};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 //mod api;
-//mod db;
+mod db;
 
 #[derive(askama::Template)]
 #[template(path = "index.html")]
@@ -29,7 +30,7 @@ async fn index() -> Result<Html<String>, axum::http::StatusCode> {
 }
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Start registry -> https://docs.rs/tracing-subscriber/latest/tracing_subscriber/registry/struct.Registry.html
     tracing_subscriber::registry()
         .with(
@@ -40,16 +41,14 @@ async fn main() {
         .init();
 
     // use db module from db.rs
-    // let pool = db::connect_to_database().await;
-
-    // migrate db
-    // sqlx::migrate!().run(&pool).await.unwrap();
+    let db = Arc::new(Db::new().await?);
 
     // build our application:
     // https://docs.rs/axum/latest/axum/struct.Router.html#method.nest for static serve
     //
     let app = Router::new()
         .route("/", get(index))
+        .layer(Extension(db))
         .nest_service("/assets", tower_http::services::ServeDir::new("assets"))
         .nest_service(
             "/favicon.ico",
