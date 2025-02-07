@@ -1,14 +1,11 @@
 use askama::Template;
 use axum::body::Body;
-use axum::body::Bytes;
-use axum::extract::connect_info::Connected;
 use axum::extract::{ConnectInfo, Extension};
-use axum::http::Request;
+use axum::http::{HeaderMap, Request}; // Añade HeaderMap aquí
 use axum::middleware::{self, Next};
 use axum::response::Html;
 use axum::response::Response;
 use axum::{routing::get, Router};
-use http_body::Body as HttpBody;
 use std::net::SocketAddr;
 use std::sync::Arc;
 use std::time::Instant;
@@ -16,7 +13,6 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 //mod api;
 mod db;
 use db::Db;
-use std::error::Error as StdError;
 
 #[derive(askama::Template)]
 #[template(path = "index.html")]
@@ -28,11 +24,17 @@ pub struct IndexTemplate {
 
 async fn index(
     ConnectInfo(addr): ConnectInfo<SocketAddr>,
+    headers: HeaderMap,
     Extension(db): Extension<Arc<Db>>,
 ) -> Result<Html<String>, axum::http::StatusCode> {
-    // Extract IP address from SocketAddr
-    let ip_address = addr.ip().to_string();
-    // Update or insert the IP address in the database
+    // Extraemos ip redirigido por nginx en la cabecera https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For
+    let ip_address = headers
+        .get("X-Forwarded-For")
+        .and_then(|v| v.to_str().ok())
+        .map(|s| s.split(',').next().unwrap_or("").trim().to_string())
+        .unwrap_or_else(|| addr.ip().to_string()); // Usa la IP de ConnectInfo como respaldo
+
+    // Actualiza o inserta la IP en la base de datos
     if let Err(e) = db.update_or_insert_ip(&ip_address).await {
         eprintln!("Error updating database: {}", e);
         return Err(axum::http::StatusCode::INTERNAL_SERVER_ERROR);
@@ -68,6 +70,7 @@ async fn track_metrics(req: Request<Body>, next: Next) -> Response {
 
     response
 }
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Inicialización del tracing (como antes)
