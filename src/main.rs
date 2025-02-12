@@ -20,6 +20,7 @@ pub struct IndexTemplate {
     pub title: String,
     pub desc: String,
     pub add_info: String,
+    pub sum: i64, 
 }
 
 async fn index(
@@ -34,11 +35,20 @@ async fn index(
         .map(|s| s.split(',').next().unwrap_or("").trim().to_string())
         .unwrap_or_else(|| addr.ip().to_string()); // Usa la IP de ConnectInfo como respaldo
 
-    // Actualiza o inserta la IP en la base de datos
+    
     if let Err(e) = db.update_or_insert_ip(&ip_address).await {
         eprintln!("Error updating database: {}", e);
         return Err(axum::http::StatusCode::INTERNAL_SERVER_ERROR);
     }
+
+    
+    let nconns = match db.get_nconns().await {
+        Ok(count) => count,
+        Err(e) => {
+            eprintln!("Error getting connection count: {}", e);
+            return Err(axum::http::StatusCode::INTERNAL_SERVER_ERROR);
+        }
+    };
 
     let template = IndexTemplate {
         title: "Hola👋, soy varo".to_string(),
@@ -46,6 +56,7 @@ async fn index(
         add_info:
             "Web provisional hecha con Rust usando plantillas de askama y htmx. En construcción 🚧 "
                 .to_string(),
+        sum: nconns, 
     };
     template
         .render()

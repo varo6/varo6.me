@@ -58,6 +58,13 @@ impl Db {
 
         Ok(())
     }
+
+    pub async fn get_nconns(&self) -> Result<i64, sqlx::Error> {
+        let result = sqlx::query_as::<_, SumCounts>("SELECT COUNT(ip) as sum FROM conns;")
+            .fetch_one(&self.pool)
+            .await?;
+        Ok(result.sum)
+    }
 }
 
 #[derive(FromRow, Serialize, Deserialize)]
@@ -65,15 +72,6 @@ pub struct Conn {
     ip: String, // IpAddr not valid in sqlx
     count: i64, // i16 not valid sqlx
 }
-
-async fn get_nconns(Extension(db): Extension<Arc<Db>>) -> Json<i64> {
-    let result = sqlx::query_as::<_, SumCounts>("SELECT SUM(count) as sum FROM conns;")
-        .fetch_one(&db.pool)
-        .await
-        .unwrap();
-    Json(result.sum)
-}
-
 async fn add_conn(Extension(db): Extension<Arc<Db>>, Json(conn): Json<Conn>) -> StatusCode {
     sqlx::query("INSERT INTO conns (ip, count) VALUES (?1, ?2);")
         .bind(conn.ip.to_string())
@@ -92,5 +90,3 @@ async fn conns(Extension(db): Extension<Arc<Db>>) -> Json<Vec<Conn>> {
             .unwrap(),
     )
 }
-
-// https://docs.rs/sqlx/latest/sqlx/sqlite/type.SqlitePool.html
