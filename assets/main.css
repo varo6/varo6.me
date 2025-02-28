@@ -1,0 +1,208 @@
+@import url("pygment.css");
+@import url('https://fonts.cdnfonts.com/css/ibm-plex-mono?styles=169864');
+/* Reset y estilos básicos */
+* {
+  box-sizing: border-box;
+}
+
+body { 
+  margin: 0; 
+  padding: 0; 
+  text-align: center; 
+  color: #393E46 ;
+  line-height: 1.6;
+  font-family: 'IBM Plex Mono', sans-serif;
+
+
+}
+
+a, a:visited { text-decoration: none; color: #333; }
+a:hover { color: #FFF; background-color: #333 }
+h1, h2, h3, h4, h5, h6, h7 { margin: 0; text-transform: uppercase; }
+h4, h5, h6 { font-size: 14px; }
+h1 { padding: 0 0 15px; margin: 0 0 15px 0; }
+blockquote { font-style: italic; background: #EAEAEA; margin: 20px; padding: 5px 10px; }
+blockquote cite { display: block; padding: 10px 20px 0 0; text-align: right; }
+input, textarea { padding: 5px; border: 1px solid #8A8A8A; background: #EAEAEA; width: 100%; }
+input:hover, textarea:hover, blockquote:hover { background: #E5E5E5; }
+
+/* Contenedor principal */
+#wrap { 
+  margin: 0 auto; 
+  text-align: left; 
+  font-size: 13px; 
+  line-height: 1.4; 
+  max-width: 1024px;
+  width: 100%;
+  padding: 0 15px;
+}
+
+/* Contenedor y sidebar */
+#container { 
+  width: 65%; 
+  float: right;
+  padding: 0 0 0 20px;
+}
+
+#sidebar { 
+  overflow: hidden; 
+  text-align: right; 
+  width: 35%; 
+  float: left;
+  padding: 0 15px 0 0; 
+  border-right: 1px dotted #C8C8C8; 
+}
+
+#sidebar li { list-style-type: none; }
+#sidebar > li { margin: 20px 0; }
+#sidebar h1 { border-bottom: 1px dotted #C8C8C8; }
+#sidebar .description { display: block; width: 100%; margin: 0 0 10px 0; }
+
+#back {
+  position: sticky;
+  top: 0;
+  padding: 5px;
+  background-color: #eee;
+  border: 2px solid #333;
+  z-index: 100;
+}
+
+ul.sub-menu, ul.children { margin: 0 10px 0 0; }
+
+/* Estilos de entradas */
+.post { margin: 0 0 30px 0; padding: 0 0 30px 0; border-bottom: 1px dotted #C8C8C8; }
+.post-edit-link { clear: both; }
+.meta { margin: 10px; padding: 15px; background: #EAEAEA; clear: both; }
+.meta span { display: block; clear: left; }
+.thumbnail { margin: 0; padding: 0; }
+.thumbnail img { float: right; max-width: 100%; height: auto; }
+
+.entry { font-size: 14px; line-height: 20px; margin-top: 30px; }
+.entry h2, .entry h3, .entry h4, .entry h5 { margin: 30px 0 10px 0; }
+.entry img { display: block; border: 1px solid #BDBDBD !important; max-width: 100%; height: auto; }
+.entry img.wp-smiley { border: 0 !important; }
+.entry a img:hover { background-color: transparent; border: 1px solid #E5E5E5 !important; }
+.entry .aligncenter, div.aligncenter { margin: 10px auto; }
+.entry .alignleft { float: left; margin: 10px 15px 10px 0; }
+.entry .alignright { float: right; margin: 10px 0 10px 15px; }
+.entry .alignnone { margin: 10px 0; }
+.entry .gallery, .wp-caption { text-align: center; background: #EAEAEA; margin: 10px; padding: 10px; border: 0; max-width: 100%; height: auto; }
+.entry .wp-caption img { border: 0 none; margin: 0 auto; padding: 0; max-width: 100%; height: auto; }
+.entry .gallery:hover, .wp-caption:hover { background: #E5E5E5; }
+.entry .gallery-caption, .wp-caption-text { background: transparent; }
+.entry .wp-caption p.wp-caption-text { font-size: 11px; line-height: 17px; margin: 5px 0; }
+.entry .gallery-icon { width: 100%; height: auto; }
+.entry .gallery-icon img { margin: 0 auto; }
+.entry .gallery-caption { margin: 5px 10px 0 0; padding: 0; }
+.entry p.attachment img { margin: 0 auto; }
+.sticky { border-bottom: 3px dotted #C8C8C8; }
+
+section.home { display: inline-block; width: 45%; vertical-align: top; }
+
+.wp_syntax { padding: 5px 0; }
+.wp_syntax pre { line-height: 1.3; overflow-x: auto; }
+.wp_syntax pre.php { line-height: 1; }
+
+.widget_recent_entries ul li,
+.widget_recent_comments ul li,
+.widget_rss ul li { margin: 10px 0; padding: 10px 0; border-top: 1px dotted #C8C8C8; }
+
+.related { margin: 20px 0 0 0; }
+.nav { margin: 30px 0; text-align: center; }
+
+/* Comentarios */
+#comments { border-top: 1px dotted #C8C8C8; margin: 30px 0 0 0; padding: 30px 0 0 0; }
+.commentlist li { list-style-type: none; padding: 10px; margin: 20px 0 0 0; }
+.commentlist li.even { background: #EAEAEA; }
+.commentlist li.odd { background: #D6D6D6; }
+.comment-author img { float: left; margin: 0 10px 10px 0; max-width: 50px; }
+ul.commentlist ul.children { padding-left: 10px; }
+ul.commentlist ul.children li { list-style-type: none; border: 1px solid #AAA }
+.form-section { margin: 10px 0; text-align: right; }
+.form-section div { display: inline; }
+.bypostauthor { border: 3px dotted #C8C8C8; }
+.form-allowed-tags { display: none; }
+
+#respond { margin: 30px 0 0 0; background: #FFF; border: 1px solid #9A9A9A; padding: 20px; }
+#commentform p { text-align: right; }
+#commentform input { width: 100%; height: auto; margin: 0 0 10px 0; }
+#commentform .required { font-weight: bold; }
+#commentform textarea { width: 100%; height: auto; margin: 10px 0 0 0; }
+#commentform .comment-form-comment { margin-bottom: 5px; text-align: right; }
+#commentform .form-allowed-tags { color: #8A8A8A; margin-top: 0; font-size: 10px; }
+
+input#submit { font-weight: bold; }
+input#s { width: 100%; height: auto; margin: 5px 0; }
+
+/* Footer */
+#footer { text-align: center; clear: both; padding-top: 30px; }
+#footer div { margin: 30px 0 0 0; padding: 30px 0 0 0; border-top: 1px dotted #C8C8C8; }
+#footer li { list-style-type: none; }
+#footer .widget_tag_cloud h2 { display: none; }
+
+/* LWM EDITS */
+#page-title {
+    position: relative;
+    top: 8px;
+}
+
+/* Media queries para responsive */
+@media (max-width: 768px) {
+  #container, #sidebar {
+    float: none;
+    width: 100%;
+    padding: 0;
+  }
+  
+  #sidebar {
+    text-align: left;
+    border-right: none;
+    border-bottom: 1px dotted #C8C8C8;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+  
+  .entry {
+    margin-top: 20px;
+  }
+  
+  section.home {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+  
+  #commentform input {
+    width: 100%;
+    margin: 0 0 10px 0;
+  }
+  
+  .entry .alignleft, .entry .alignright {
+    float: none;
+    display: block;
+    margin: 10px auto;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 24px;
+  }
+  
+  h2 {
+    font-size: 20px;
+  }
+  
+  .entry {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  blockquote {
+    margin: 10px 0;
+  }
+}
