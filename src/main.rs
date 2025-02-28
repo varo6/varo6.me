@@ -1,7 +1,7 @@
 use askama::Template;
 use axum::body::Body;
 use axum::extract::{ConnectInfo, Extension};
-use axum::http::{HeaderMap, Request}; // Añade HeaderMap aquí
+use axum::http::{HeaderMap, Request};
 use axum::middleware::{self, Next};
 use axum::response::Html;
 use axum::response::Response;
@@ -10,7 +10,7 @@ use std::net::SocketAddr;
 use std::sync::Arc;
 use std::time::Instant;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
-//mod api;
+mod api; 
 mod db;
 use db::Db;
 
@@ -18,7 +18,6 @@ use db::Db;
 #[template(path = "base.html")]
 pub struct IndexTemplate {
     pub title: String,
-    pub desc: String,
     pub add_info: String,
     pub sum: i64,
 }
@@ -49,8 +48,8 @@ async fn index(
     };
 
     let template = IndexTemplate {
-        title: "🚧web hecha con Rust y htmx en proceso🚧".to_string(),
-        add_info: "🚧 ".to_string(),
+        title: "varo6.me".to_string(),
+        add_info: "🚧Web en construcción🚧".to_string(),
         sum: nconns,
     };
     template
@@ -79,7 +78,7 @@ async fn track_metrics(req: Request<Body>, next: Next) -> Response {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Inicialización del tracing (como antes)
+   
     tracing_subscriber::registry()
         .with(
             tracing_subscriber::EnvFilter::try_from_default_env()
@@ -88,12 +87,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .with(tracing_subscriber::fmt::layer())
         .init();
 
-    // Inicialización de la base de datos (como antes)
+   
     let db = Arc::new(db::Db::new().await?);
 
-    // Construye la aplicación
+   
     let app = Router::new()
         .route("/", get(index))
+        // Routes desde api.rs
+        .merge(api::routes())  
         .layer(Extension(db.clone()))
         .nest_service("/assets", tower_http::services::ServeDir::new("assets"))
         .nest_service(

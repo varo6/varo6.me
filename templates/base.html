@@ -5,22 +5,25 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/main.css" type="text/css" />
+    <script src="assets/htmx.min.js" defer></script>
 </head>
 <body>
     <br>
     <br>
     <div id="wrap">
         <div id="sidebar">
-        <h1><a href="/" title="title">{{title}}</a></h1>
-            <span class="description">Hola! 👋 Soy Álvaro, estudiante en el cuarto año de ingeniería telemática.
-                Esta web está hecha con Rust y HTMX.
+            <h1><a href="/" title="title">{{title}}</a></h1>
+           <span class="description">
+           Hecho con <a href="https://htmx.org" target="_blank">htmx</a> y 
+           <a href="https://github.com/tokio-rs/axum" target="_blank">Rust</a>, desde la conexión TCP hasta el renderizado ⚡
             </span>
             <p>&nbsp;</p>
             <nav>
-                <h2>Pages</h2>
+                <h2>Páginas</h2>
                 <ul>
-                    <li>hola</li>
-                    <li><a href="">TITULO DE PAGINA</a></li>
+                    <li><a hx-get="/api/about" hx-target="#container" href="" >ABOUT</a></li>
+                    <li><a href="">BLOG</a></li>
+                    <li><a href="" hx-get="/api/projects" hx-target="#container">PROYECTOS</a></li>
                 </ul>
             </nav>
 
@@ -28,7 +31,7 @@
             <div class="widget blogroll">
                 <h2>Links</h2>
                 <ul>
-                    <li><a href="">AHSDASDHL</a></li>
+                    <li><a href="">L</a></li>
                 </ul>
             </div>
              
@@ -44,7 +47,7 @@
                 </ul>
             </div>
             probandoo	
-        {{sum}}
+            {{sum}}
 
             <div class="widget blogroll">
                 <h2>Data</h2>
@@ -64,8 +67,8 @@
             {{add_info}}
 
             <div class="entry">
-                Esta es una web
-           </div>
+                aaaaa
+            </div>
         </div>
 
         <div id="footer">
