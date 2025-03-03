@@ -18,6 +18,7 @@ body {
 
 a, a:visited { text-decoration: none; color: #333; }
 a:hover { color: #FFF; background-color: #333 }
+.hovered:hover { color: #FFF; background-color: #333; }
 h1, h2, h3, h4, h5, h6, h7 { margin: 0; text-transform: uppercase; }
 h4, h5, h6 { font-size: 14px; }
 h1 { padding: 0 0 15px; margin: 0 0 15px 0; }
@@ -76,6 +77,12 @@ ul.sub-menu, ul.children { margin: 0 10px 0 0; }
 .meta span { display: block; clear: left; }
 .thumbnail { margin: 0; padding: 0; }
 .thumbnail img { float: right; max-width: 100%; height: auto; }
+.aligncenter {
+    text-align: center;
+    border-top: 1px solid black; /* Añade una línea negra horizontal arriba */
+    border-bottom: 1px solid black; /* Añade una línea negra horizontal abajo */
+    padding: 10px 0px; 
+}
 
 .entry { font-size: 14px; line-height: 20px; margin-top: 30px; }
 .entry h2, .entry h3, .entry h4, .entry h5 { margin: 30px 0 10px 0; }
@@ -146,7 +153,73 @@ input#s { width: 100%; height: auto; margin: 5px 0; }
     top: 8px;
 }
 
+/* Social icon alignment */
+.widget.social li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Add this line to align content to the right */
+  margin-bottom: 5px;
+}
+
+.widget.social img {
+  margin-left: 5px;
+  width: 16px;
+  height: 16px;
+}
+
+.tech-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 25px 0;
+  background-color: #f9f9f9;
+}
+
+.tech-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.tech-item:hover {
+  transform: translateY(-5px);
+  background-color: transparent;
+}
+
+.tech-item img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 8px;
+  border: none !important;
+}
+
+.tech-item span {
+  font-size: 12px;
+  font-weight: bold;
+}
+
 /* Media queries para responsive */
+@media (max-width: 768px) {
+  .tech-container {
+    padding: 15px;
+  }
+  
+  .tech-item img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tech-item {
+    width: 25%;
+  }
+}
+
 @media (max-width: 768px) {
   #container, #sidebar {
     float: none;
@@ -205,4 +278,5 @@ input#s { width: 100%; height: auto; margin: 5px 0; }
   blockquote {
     margin: 10px 0;
   }
+
 }

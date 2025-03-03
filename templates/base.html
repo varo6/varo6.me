@@ -21,9 +21,9 @@
             <nav>
                 <h2>Páginas</h2>
                 <ul>
-                    <li><a hx-get="/api/about" hx-target="#container" href="" >ABOUT</a></li>
-                    <li><a href="">BLOG</a></li>
+                    <li><a hx-get="/api/about" hx-target="#container" href="" >SOBRE MÍ</a></li>
                     <li><a href="" hx-get="/api/projects" hx-target="#container">PROYECTOS</a></li>
+                    <li><a href="" hx-get="/api/workflow" hx-target="#container">WORKFLOW</a></li>
                 </ul>
             </nav>
 
@@ -39,15 +39,12 @@
             <div class="widget social">
                 <h2>Social</h2>
                 <ul>
-                    <li>(icon)<a href="">SOCIAL 1</a></li>
-                    <li>(icon)<a href="">SOCIAL 2</a></li>
-                    <li>(icon)<a href="">SOCIAL 3</a></li>
-                    <li>(icon)<a href="">SOCIAL 4</a></li>
-                    endkjal 
+                    <li> <a href="https://www.linkedin.com/in/alvaro-hernandez-ingeniero-programacion/">LinkedIn</a><img src="/assets/linkedin.svg" alt="LinkedIn" width="16" height="16"></li>
+                    <li> <a href="https://github.com/varo6">Github</a><img src="/assets/github.svg" alt="github" width="16" height="16"> </li>
+                    <li><a href="mailto:alvaro.hriquelme@edu.upct.es">Mi correo </a> <img src="/assets/email.svg" alt="email" width="16" height="16"></li>
                 </ul>
             </div>
-            probandoo	
-            {{sum}}
+           
 
             <div class="widget blogroll">
                 <h2>Data</h2>
@@ -58,22 +55,18 @@
                     <li><a href="" rel="alternate">rss feed</a></li>
                     mensaje2 
                 </ul>
+                Times visited so far:
+                 {{sum}}
             </div>
         </div>
 
         <div id="container">
-            <h1>prueba</h1>
-
-            {{add_info}}
-
-            <div class="entry">
-                aaaaa
-            </div>
+            <div hx-get="/api/about" hx-trigger="load" hx-target="#container"></div>
         </div>
 
         <div id="footer">
             <div id="credits">
-                <span></span>
+                <span>{{add_info}}</span>
             </div>
         </div>
     </div>
