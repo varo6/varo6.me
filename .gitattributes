@@ -1,5 +1,5 @@
 # tailwind automatically generated
 *.css linguist-vendored
 # web components reused
-/templates/components/*
+/templates/components/* linguist-vendored
 
