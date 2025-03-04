@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <title>varo6.me</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/assets/main.css" type="text/css" />
-    <script src="assets/htmx.min.js" defer></script>
+    <script src="assets/htmx.min.js"></script>
 </head>
 <body>
     <br>
     <br>
+    <!-- Mobile Navigation Toggle Button -->
+    <div class="mobile-nav-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <!-- Mobile Navigation Background Overlay -->
+    <div class="overlay"></div>
+    
     <div id="wrap">
         <div id="sidebar">
             <h1><a href="/" title="title">{{title}}</a></h1>
            <span class="description">
-           Hecho con <a href="https://htmx.org" target="_blank">htmx</a> y 
-           <a href="https://github.com/tokio-rs/axum" target="_blank">Rust</a>, desde la conexión TCP hasta el renderizado ⚡
+            ⚡ Este proyecto está hecho con <a href="https://htmx.org" target="_blank">htmx</a> y 
+           <a href="https://github.com/tokio-rs/axum" target="_blank">Rust</a>, desde la conexión HTTP hasta los API endpoints ⚡
             </span>
-            <p>&nbsp;</p>
             <nav>
                 <h2>Páginas</h2>
                 <ul>
-                    <li><a hx-get="/api/about" hx-target="#container" href="" >SOBRE MÍ</a></li>
-                    <li><a href="" hx-get="/api/projects" hx-target="#container">PROYECTOS</a></li>
-                    <li><a href="" hx-get="/api/workflow" hx-target="#container">WORKFLOW</a></li>
+                    <li><a hx-get="/api/about" hx-target="#container" hx-push-url="/about" href="" >SOBRE MÍ</a></li>
+                    <li><a href="" hx-get="/api/projects" hx-target="#container" hx-push-url="/projects">PROYECTOS</a></li>
+                    <li><a href="" hx-get="/api/workflow" hx-target="#container" hx-push-url="/workflow">WORKFLOW</a></li>
                 </ul>
             </nav>
-
-            <!--  SEPARACION LINKS -->
-            <div class="widget blogroll">
-                <h2>Links</h2>
-                <ul>
-                    <li><a href="">L</a></li>
-                </ul>
-            </div>
              
             <!--  SEPARACION SOCIAL -->
             <div class="widget social">
@@ -49,26 +49,66 @@
             <div class="widget blogroll">
                 <h2>Data</h2>
                 <ul>
-                    <li><a href="">sitemap</a></li>
-                    <li><a href="" rel="alternate">atom feed</a></li>
-                    mensaje1 
-                    <li><a href="" rel="alternate">rss feed</a></li>
-                    mensaje2 
+                    <li>Visitas únicas </li>
+                    <li>a la página:</li>
                 </ul>
-                Times visited so far:
-                 {{sum}}
+                <strong>
+ 
+        <p>                 {{sum}} </p>
+
+                 </strong>
             </div>
         </div>
 
         <div id="container">
-            <div hx-get="/api/about" hx-trigger="load" hx-target="#container"></div>
+            {{base_div|safe}}
         </div>
 
         <div id="footer">
+            <br>
+            <br>
+            
             <div id="credits">
-                <span>{{add_info}}</span>
+                <span></span>
             </div>
         </div>
+Alvaro Hernández Riquelme - 2025
     </div>
+
+    <!-- Mobile Navigation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.mobile-nav-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.overlay');
+            
+            menuToggle.addEventListener('click', function() {
+                menuToggle.classList.toggle('active');
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.classList.toggle('menu-open');
+            });
+            
+            overlay.addEventListener('click', function() {
+                menuToggle.classList.remove('active');
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            });
+            
+            // Close menu when clicking a link on mobile
+            const sidebarLinks = sidebar.querySelectorAll('a');
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        menuToggle.classList.remove('active');
+                        sidebar.classList.remove('active');
+                        overlay.classList.remove('active');
+                        document.body.classList.remove('menu-open');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

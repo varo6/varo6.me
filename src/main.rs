@@ -18,8 +18,63 @@ use db::Db;
 #[template(path = "base.html")]
 pub struct IndexTemplate {
     pub title: String,
-    pub add_info: String,
+    pub base_div: String,
     pub sum: i64,
+}
+
+async fn page_content(
+    path: axum::extract::Path<String>,
+    ConnectInfo(addr): ConnectInfo<SocketAddr>,
+    headers: HeaderMap,
+    Extension(db): Extension<Arc<Db>>,
+) -> Result<Html<String>, axum::http::StatusCode> {
+    // Extract forwarded IP like in your current implementation
+    let ip_address = headers
+        .get("X-Forwarded-For")
+        .and_then(|v| v.to_str().ok())
+        .map(|s| s.split(',').next().unwrap_or("").trim().to_string())
+        .unwrap_or_else(|| addr.ip().to_string());
+
+    if let Err(e) = db.update_or_insert_ip(&ip_address).await {
+        eprintln!("Error updating database: {}", e);
+        return Err(axum::http::StatusCode::INTERNAL_SERVER_ERROR);
+    }
+
+    let nconns = match db.get_nconns().await {
+        Ok(count) => count,
+        Err(e) => {
+            eprintln!("Error getting connection count: {}", e);
+            return Err(axum::http::StatusCode::INTERNAL_SERVER_ERROR);
+        }
+    };
+
+    // Determine which content to load based on path
+    let base_div = match path.as_str() {
+        "" | "about" => {
+            let about = api::AboutTemplate {};
+            about.render().unwrap_or_default()
+        },
+        "projects" => {
+            let projects = api::ProjectsTemplate {};
+            projects.render().unwrap_or_default()
+        },
+        "workflow" => {
+            let workflow = api::WorkflowTemplate {};
+            workflow.render().unwrap_or_default()
+        },
+        _ => return Err(axum::http::StatusCode::NOT_FOUND),
+    };
+
+    let template = IndexTemplate {
+        title: "varo6.me".to_string(),
+        base_div,
+        sum: nconns,
+    };
+    
+    template
+        .render()
+        .map(Html)
+        .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)
 }
 
 async fn index(
@@ -27,12 +82,16 @@ async fn index(
     headers: HeaderMap,
     Extension(db): Extension<Arc<Db>>,
 ) -> Result<Html<String>, axum::http::StatusCode> {
-    // Extraemos ip redirigido por nginx en la cabecera https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For
+    // Use the about template as default for the root route
+    let about = api::AboutTemplate {};
+    let base_div = about.render().unwrap_or_default();
+    
+    // Extract forwarded IP like before
     let ip_address = headers
         .get("X-Forwarded-For")
         .and_then(|v| v.to_str().ok())
         .map(|s| s.split(',').next().unwrap_or("").trim().to_string())
-        .unwrap_or_else(|| addr.ip().to_string()); // Usa la IP de ConnectInfo como respaldo
+        .unwrap_or_else(|| addr.ip().to_string());
 
     if let Err(e) = db.update_or_insert_ip(&ip_address).await {
         eprintln!("Error updating database: {}", e);
@@ -49,9 +108,10 @@ async fn index(
 
     let template = IndexTemplate {
         title: "varo6.me".to_string(),
-        add_info: "🚧Web en construcción🚧".to_string(),
+        base_div,
         sum: nconns,
     };
+    
     template
         .render()
         .map(Html)
@@ -93,6 +153,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
    
     let app = Router::new()
         .route("/", get(index))
+        .route("/{path}", get(page_content))
         // Routes desde api.rs
         .merge(api::routes())  
         .layer(Extension(db.clone()))

@@ -42,7 +42,8 @@ input:hover, textarea:hover, blockquote:hover { background: #E5E5E5; }
 #container { 
   width: 65%; 
   float: right;
-  padding: 0 0 0 20px;
+  padding: 0 0 0 24px;
+  font-size: 103%;
 }
 
 #sidebar { 
@@ -50,13 +51,14 @@ input:hover, textarea:hover, blockquote:hover { background: #E5E5E5; }
   text-align: right; 
   width: 35%; 
   float: left;
-  padding: 0 15px 0 0; 
+  padding: 0 19px 0 0; 
   border-right: 1px dotted #C8C8C8; 
+  font-size: 110%;
 }
 
 #sidebar li { list-style-type: none; }
-#sidebar > li { margin: 20px 0; }
 #sidebar h1 { border-bottom: 1px dotted #C8C8C8; }
+#sidebar > li { margin: 20px 0; }
 #sidebar .description { display: block; width: 100%; margin: 0 0 10px 0; }
 
 #back {
@@ -169,7 +171,7 @@ input#s { width: 100%; height: auto; margin: 5px 0; }
 
 .tech-container {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
   border: 1px solid #000;
   border-radius: 10px;
@@ -200,6 +202,114 @@ input#s { width: 100%; height: auto; margin: 5px 0; }
 .tech-item span {
   font-size: 12px;
   font-weight: bold;
+}
+
+
+/****************************** PROJECT SECTION ***********************************/
+
+.project-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 25px 0;
+  background-color: #f9f9f9;
+  height: 150px; /* Reducido a la mitad aproximadamente */
+  transition: transform 0.2s ease;
+  overflow: hidden;
+}
+
+.project-container:hover {
+  transform: translateY(-5px);
+  background-color: #f0f0f0;
+}
+
+.project-info {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+}
+
+.project-info h3 {
+  margin: 0 0 4px 0;
+}
+
+.project-date {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.project-description {
+  margin: 0;
+  line-height: 1.4;
+  font-size: 13px;
+  max-height: 80px;
+  overflow-y: auto;
+}
+
+.project-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.project-link:hover {
+  color: inherit;
+  background-color: transparent;
+}
+
+.project-link:hover .project-container {
+  /* Keep only the project container hover effect */
+  transform: translateY(-5px);
+  background-color: #f0f0f0;
+}
+
+.project-image {
+  flex: 0 0 100px;
+}
+
+.project-image img {
+  width: 150px;
+  height: 75px;
+  object-fit: cover;
+  object-position: left;
+  border-radius: 8px;
+  border: 1px solid #ddd !important;
+}
+
+
+/****************************** WORKFLOW ***********************************/
+
+.workflowimg {
+  width: 100%;
+  object-fit: cover;
+  object-position: left;
+  border-radius: 8px;
+  border: 1px solid #ddd !important;
+}
+
+/* Responsive para el contenedor de proyectos */
+@media (max-width: 768px) {
+  .project-container {
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+  }
+  
+  .project-image {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  
+  .project-image img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+  }
 }
 
 /* Media queries para responsive */
@@ -279,4 +389,187 @@ input#s { width: 100%; height: auto; margin: 5px 0; }
     margin: 10px 0;
   }
 
+}
+
+/* Mobile Navigation Styles */
+.mobile-nav-toggle {
+  display: none;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 1000;
+  background: #fff;
+  border: 1px solid #C8C8C8;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.mobile-nav-toggle span {
+  display: block;
+  width: 25px;
+  height: 2px;
+  background-color: #333;
+  margin: 5px 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.mobile-nav-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-nav-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-nav-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Improved Mobile Responsive Styles */
+@media (max-width: 768px) {
+  body {
+    padding-top: 60px; /* Space for fixed header */
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+  }
+
+  #wrap {
+    padding: 0;
+    width: 100%;
+  }
+
+  #container, #sidebar {
+    float: none;
+    width: 100%;
+    padding: 0 15px;
+  }
+  
+  #container {
+    margin-top: 20px;
+  }
+
+  #sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 80%;
+    max-width: 300px;
+    z-index: 999;
+    background: #fff;
+    overflow-y: auto;
+    padding: 20px;
+    text-align: left;
+    border-right: 1px dotted #C8C8C8;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  }
+  
+  #sidebar.active {
+    transform: translateX(0);
+  }
+  
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+  }
+  
+  .overlay.active {
+    display: block;
+  }
+  
+  /* Reset mobile sidebar styles */
+  #sidebar h1 {
+    margin-bottom: 20px;
+    border-bottom: 1px dotted #C8C8C8;
+  }
+  
+  #sidebar .description {
+    margin-bottom: 20px;
+  }
+  
+  #sidebar nav, #sidebar .widget {
+    margin-bottom: 20px;
+  }
+  
+  /* Adjust social widget alignment for mobile */
+  .widget.social li {
+    justify-content: flex-start;
+  }
+  
+  .widget.social img {
+    margin-left: 0;
+    margin-right: 5px;
+    order: -1;
+  }
+  
+  /* Mobile-friendly project containers */
+  .project-container {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .project-info {
+    width: 100%;
+  }
+  
+  .project-image {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .project-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  /* Tech container responsiveness */
+  .tech-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  /* Other mobile-specific adjustments */
+  .entry .alignleft, .entry .alignright {
+    float: none;
+    display: block;
+    margin: 10px auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .tech-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  body {
+    font-size: 14px;
+  }
+  
+  h1 {
+    font-size: 24px;
+  }
+  
+  h2 {
+    font-size: 20px;
+  }
+  
+  .entry {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  blockquote {
+    margin: 10px 0;
+  }
 }

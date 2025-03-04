@@ -3,7 +3,7 @@ use axum::response::Html;
 use axum::{routing::get, Router};
 
 #[derive(Template)]
-#[template(path = "about.html")]
+#[template(path = "components/about.html")]
 pub struct AboutTemplate {}
 
 pub async fn about() -> Result<Html<String>, axum::http::StatusCode> {
@@ -15,7 +15,7 @@ pub async fn about() -> Result<Html<String>, axum::http::StatusCode> {
 }
 
 #[derive(Template)]
-#[template(path = "projects.html")]
+#[template(path = "components/projects.html")]
 pub struct ProjectsTemplate {}
 
 pub async fn projects() -> Result<Html<String>, axum::http::StatusCode> {
@@ -27,7 +27,7 @@ pub async fn projects() -> Result<Html<String>, axum::http::StatusCode> {
 }
 
 #[derive(Template)]
-#[template(path = "workflow.html")]
+#[template(path = "components/workflow.html")]
 pub struct WorkflowTemplate {}
 
 pub async fn workflow() -> Result<Html<String>, axum::http::StatusCode> {
