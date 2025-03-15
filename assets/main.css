@@ -12,8 +12,22 @@ body {
   color: #393E46 ;
   line-height: 1.6;
   font-family: 'IBM Plex Mono', sans-serif;
+  position: relative;
+  overflow-y: auto;
 
 
+}
+.grid {
+  /* Elimina position: fixed ya que está aplicado al body */
+  background-image: linear-gradient(to right, #80808012 1px, transparent 1px),
+    linear-gradient(to bottom, #80808012 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-attachment: fixed; /* Esto es clave: mantiene el fondo fijo mientras permite scroll */
+  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto; /* Asegura que se puede hacer scroll */
 }
 
 a, a:visited { text-decoration: none; color: #333; }
@@ -36,6 +50,8 @@ input:hover, textarea:hover, blockquote:hover { background: #E5E5E5; }
   max-width: 1024px;
   width: 100%;
   padding: 0 15px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Contenedor y sidebar */
@@ -571,5 +587,14 @@ input#s { width: 100%; height: auto; margin: 5px 0; }
   
   blockquote {
     margin: 10px 0;
+  }
+  .grid {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(to right, #80808012 1px, transparent 1px),
+      linear-gradient(to bottom, #80808012 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 }

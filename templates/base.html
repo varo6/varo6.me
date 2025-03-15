@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/assets/main.css" type="text/css" />
     <script src="assets/htmx.min.js"></script>
 </head>
-<body>
+<body class="grid">
     <br>
     <br>
     <!-- Mobile Navigation Toggle Button -->
@@ -18,12 +18,12 @@
     </div>
     <!-- Mobile Navigation Background Overlay -->
     <div class="overlay"></div>
-    
-    <div id="wrap">
+
+    <div id="wrap" >
         <div id="sidebar">
             <h1><a href="/" title="title">{{title}}</a></h1>
            <span class="description">
-            ⚡ Este proyecto está hecho con <a href="https://htmx.org" target="_blank">htmx</a> y 
+            ⚡ Este proyecto está hecho con <a href="https://htmx.org" target="_blank">htmx</a> y
            <a href="https://github.com/tokio-rs/axum" target="_blank">Rust</a>, desde la conexión HTTP hasta los API endpoints ⚡
             </span>
             <nav>
@@ -34,7 +34,7 @@
                     <li><a href="" hx-get="/api/workflow" hx-target="#container" hx-push-url="/workflow">WORKFLOW</a></li>
                 </ul>
             </nav>
-             
+
             <!--  SEPARACION SOCIAL -->
             <div class="widget social">
                 <h2>Social</h2>
@@ -44,7 +44,7 @@
                     <li><a href="mailto:alvaro.hriquelme@edu.upct.es">Mi correo </a> <img src="/assets/email.svg" alt="email" width="16" height="16"></li>
                 </ul>
             </div>
-           
+
 
             <div class="widget blogroll">
                 <h2>Data</h2>
@@ -53,7 +53,7 @@
                     <li>a la página:</li>
                 </ul>
                 <strong>
- 
+
         <p>                 {{sum}} </p>
 
                  </strong>
@@ -67,7 +67,7 @@
         <div id="footer">
             <br>
             <br>
-            
+
             <div id="credits">
                 <span></span>
             </div>
@@ -81,21 +81,21 @@ Alvaro Hernández Riquelme - 2025
             const menuToggle = document.querySelector('.mobile-nav-toggle');
             const sidebar = document.getElementById('sidebar');
             const overlay = document.querySelector('.overlay');
-            
+
             menuToggle.addEventListener('click', function() {
                 menuToggle.classList.toggle('active');
                 sidebar.classList.toggle('active');
                 overlay.classList.toggle('active');
                 document.body.classList.toggle('menu-open');
             });
-            
+
             overlay.addEventListener('click', function() {
                 menuToggle.classList.remove('active');
                 sidebar.classList.remove('active');
                 overlay.classList.remove('active');
                 document.body.classList.remove('menu-open');
             });
-            
+
             // Close menu when clicking a link on mobile
             const sidebarLinks = sidebar.querySelectorAll('a');
             sidebarLinks.forEach(link => {
