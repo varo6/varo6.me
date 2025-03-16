@@ -588,13 +588,4 @@ input#s { width: 100%; height: auto; margin: 5px 0; }
   blockquote {
     margin: 10px 0;
   }
-  .grid {
-    position: absolute;
-    inset: 0;
-    height: 100%;
-    width: 100%;
-    background-image: linear-gradient(to right, #80808012 1px, transparent 1px),
-      linear-gradient(to bottom, #80808012 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
 }
