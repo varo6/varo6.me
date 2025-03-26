@@ -51,7 +51,7 @@ input:hover, textarea:hover, blockquote:hover { background: #E5E5E5; }
   width: 100%;
   padding: 0 15px;
   position: relative;
-  z-index: 1;
+  z-index: 1001;
 }
 
 /* Contenedor y sidebar */
@@ -497,11 +497,12 @@ input#s { width: 100%; height: auto; margin: 5px 0; }
     right: 0;
     bottom: 0;
     background: rgba(0,0,0,0.5);
-    z-index: 998;
+    z-index: -1;
   }
   
   .overlay.active {
     display: block;
+    z-index: 998;
   }
   
   /* Reset mobile sidebar styles */

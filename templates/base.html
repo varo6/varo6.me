@@ -89,12 +89,14 @@ Alvaro Hernández Riquelme - 2025
                 document.body.classList.toggle('menu-open');
             });
 
+            // Dentro del listener para el overlay
             overlay.addEventListener('click', function() {
                 menuToggle.classList.remove('active');
                 sidebar.classList.remove('active');
-                overlay.classList.remove('active');
+                overlay.classList.remove('active'); // <-- Asegúrate que esto se ejecuta
                 document.body.classList.remove('menu-open');
             });
+
 
             // Close menu when clicking a link on mobile
             const sidebarLinks = sidebar.querySelectorAll('a');
